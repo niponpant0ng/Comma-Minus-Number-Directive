@@ -17,24 +17,7 @@ var app = angular.module('Comma', [])
       // $parsers called as soon as the value in the form input is modified by the user
       refModelCtrl.$parsers.push(function(val)
       {
-        var _isTypeMinusBeforeZero = function(text)
-        {
-          return text === '-0';
-        };
-        var _isOneCharAndCharIsNotMinus = function(text){
-          return text !== '-';
-        };
-        var clean = val;
-
-        if(_isTypeMinusBeforeZero(val))
-        {
-          clean = '-';
-        }
-        else if(_isOneCharAndCharIsNotMinus(val))
-        {
-          clean = $filter('convertToNumber')(val);
-          clean = $filter('number')(clean);
-        }
+        clean = $filter('comma')(val);
 
         if (val !== clean)
         {
@@ -56,4 +39,35 @@ var app = angular.module('Comma', [])
 
     return parseFloat(text);
   };
-});
+})
+.filter('comma', ['$filter', function($filter){
+  var _isTypeMinusBeforeZero = function(text)
+  {
+    return text === '-0';
+  };
+
+  var _isOneCharAndCharIsNotMinus = function(text){
+    return text !== '-';
+  };
+
+  return function(text){
+    if(text == undefined)
+    {
+      return '';
+    }
+
+    var clean = text;
+
+    if(_isTypeMinusBeforeZero(text))
+    {
+      clean = '-';
+    }
+    else if(_isOneCharAndCharIsNotMinus(text))
+    {
+      clean = $filter('convertToNumber')(text);
+      clean = $filter('number')(clean);
+    }
+
+    return clean;
+  };
+}]);
