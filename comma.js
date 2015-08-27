@@ -62,6 +62,17 @@ var app = angular.module('Comma', [])
     return text === '.';
   };
 
+  var _isFoundDot = function(text)
+  {
+    var count = 0;
+    for(var pos = text.indexOf('.'); pos !== -1; pos = text.indexOf('.', pos + 1))
+    {
+      count++;
+    }
+
+    return count !== 0;
+  };
+
   return function(text){
     if(text == undefined)
     {
@@ -77,6 +88,7 @@ var app = angular.module('Comma', [])
     {
       clean = '0';
     }
+    else if(_isFoundDot(text));
     else if(_isOneCharAndCharIsNotMinus(text))
     {
       clean = $filter('convertToNumber')(text);
