@@ -1,4 +1,5 @@
 directive use for put comma into value but that can support negative value too
+### * Can't support . value
 ## How to use
 This directive use with `angular.js` then add `Comma` as a dependency for your app:
 ```html
