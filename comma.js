@@ -8,10 +8,7 @@ var app = angular.module('Comma', [])
     require: '?ngModel',
 
     controller: ['$scope', function($scope) {
-      $scope.$watch('number', function(newValue, oldValue)
-      {
-        $scope.number = $filter('comma')(newValue, false);
-      });
+      $scope.number = $filter('comma')($scope.number, false);
     }],
 
     link: function(scope, element, attrs, refModelCtrl)
@@ -62,7 +59,7 @@ var app = angular.module('Comma', [])
     return text === '.';
   };
 
-  var _isFoundDot = function(text)
+  var _isFoundOneDot = function(text)
   {
     var count = 0;
     for(var pos = text.indexOf('.'); pos !== -1; pos = text.indexOf('.', pos + 1))
@@ -70,7 +67,7 @@ var app = angular.module('Comma', [])
       count++;
     }
 
-    return count !== 0;
+    return count === 1;
   };
 
   return function(text, isNotSkipCheckDot){
@@ -92,7 +89,7 @@ var app = angular.module('Comma', [])
     {
       clean = '0';
     }
-    else if(isNotSkipCheckDot && _isFoundDot(text));
+    else if(isNotSkipCheckDot && _isFoundOneDot(text));
     else if(_isOneCharAndCharIsNotMinus(text))
     {
       clean = $filter('convertToNumber')(text);
