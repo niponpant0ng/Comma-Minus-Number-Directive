@@ -4,14 +4,17 @@
   <title>Demo</title>
 </head>
 <body>
-  <div ng-app="App">
-    model value is {{number}}, <input ng-model="number" comma="ngModel">
+  <div ng-app="App" ng-controller="Ctrl">
+    model value is {{number}}, <input ng-model="number" comma>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular.min.js"></script>
   <script src="comma.js"></script>
   <script type="text/javascript">
     var app = angular.module('App', ['Comma']);
+    app.controller('Ctrl', function($scope){
+      $scope.number = '120000.567';
+    });
   </script>
 </body>
 </html>
