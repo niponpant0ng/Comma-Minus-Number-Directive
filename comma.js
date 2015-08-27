@@ -7,6 +7,13 @@ var app = angular.module('Comma', [])
     },
     require: '?ngModel',
 
+    // controller: ['$scope', function($scope) {
+    //   $scope.$watch('number', function(newValue, oldValue)
+    //   {
+    //     console.log(newValue)
+    //   });
+    // }],
+
     link: function(scope, element, attrs, refModelCtrl)
     {
       if(!refModelCtrl)
@@ -50,17 +57,25 @@ var app = angular.module('Comma', [])
     return text !== '-';
   };
 
+  var _isOneCharAndCharIsDot = function(text)
+  {
+    return text === '.';
+  };
+
   return function(text){
     if(text == undefined)
     {
       return '';
     }
-
     var clean = text;
 
     if(_isTypeMinusBeforeZero(text))
     {
       clean = '-';
+    }
+    else if(_isOneCharAndCharIsDot(text))
+    {
+      clean = '0';
     }
     else if(_isOneCharAndCharIsNotMinus(text))
     {
