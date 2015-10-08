@@ -59,12 +59,12 @@ var app = angular.module('Comma', [])
     return text === '.';
   };
 
-  var _isFoundDotAndNotNumberAfter = function(text)
+  var _isFoundDotAndNotNumberOrNumberIsZeroAfter = function(text)
   {
     var pos = text.indexOf('.');
     var numberAfterDot = text.substr(pos + 1, 1);
 
-    if(numberAfterDot === '')
+    if(numberAfterDot === '' || numberAfterDot == 0)
       return true;
 
     return false;
@@ -87,7 +87,7 @@ var app = angular.module('Comma', [])
     {
       clean = '0';
     }
-    else if(_isFoundDotAndNotNumberAfter(text));
+    else if(_isFoundDotAndNotNumberOrNumberIsZeroAfter(text));
     else if(_isOneCharAndCharIsNotMinus(text))
     {
       clean = $filter('convertToNumber')(text);
